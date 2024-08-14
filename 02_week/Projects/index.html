@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Counter</title>
+  <style>
+    *{
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #181332;
+      color: #fff;
+    }
+    .box {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem ;
+      align-items: center;
+      justify-content: center;
+      margin-top: 5rem;
+    }
+    .box-2 {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem ;
+      align-items: center;
+      justify-content: center;
+      margin-top: 5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Counter using setInterval with 1 second interval</h2>
+    <span id="counter">0</span>
+    <button id="countBtn">start Counter</button>
+    <button id="reset">Reset</button>
+  </div>
+
+  <div class="box-2">
+    <h2>Counter using setTimeout</h2>
+    <span id="counter-2">0</span>
+    <button id="countBtn-2">start Counter</button>
+    <button id="reset-2">Reset</button>
+  </div>
+ 
+
+  <script>
+    // counter using setInterval
+    const counter = document.getElementById("counter");
+    const countBtn = document.getElementById("countBtn");
+    const resetBtn = document.getElementById("reset")
+
+   countBtn.addEventListener("click", function startCounter(){
+    let count  = 0;
+    const intervalId = setInterval(()=> {
+      count++;
+      counter.textContent = count;
+    }, 1000) // will update every 1 second
+    resetBtn.addEventListener("click", ()=> {
+      clearInterval(intervalId);
+      count = 0 ; 
+      counter.textContent = count;
+    })
+   })
+
+   // counter using setTimeout 
+   const counterTwo = document.getElementById("counter-2");
+   const counterBtnTwo = document.getElementById("countBtn-2");
+   const resetBtnTwo = document.getElementById("reset-2");
+
+   let timeCount = 0;
+   let timerId;
+   counterBtnTwo.addEventListener("click", ()=> {
+    clearInterval(timerId); //to clear any existing intervals
+    const increment = ()=> {
+      timeCount++;
+      counterTwo.textContent = timeCount;
+      timerId = setTimeout(increment, 1000)
+    }
+    increment()
+   })
+   resetBtnTwo.addEventListener("click", ()=> {
+    clearInterval(timerId);
+    timeCount = 0;
+    counterTwo.textContent = timeCount;
+   })
+   
+    
+  </script>
+</body>
+</html>
