@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Dom</title>
+  <style>
+    body {
+      background-color: rgb(3, 3, 29);
+      color: white;
+    }
+    ul {
+      list-style: none;
+    }
+    #headBox {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #taskBox {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+  
+    .taskInputBox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .todoItem {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem ;
+      border: 1px solid aliceblue;
+      padding: 0.4rem 4rem;
+    }
+  </style>
+</head>
+
+<body>
+ <div id="headBox">
+  <h1 id="h1">Document Object model</h1>
+ </div>
+ <button id="h1Btn">Click</button>
+
+ <!-- todo list  -->
+ <div id="taskBox">
+  <div class="taskInputBox">
+    <input type="text" name="task" id="inputTask" placeholder="Enter your task ">
+    <button onclick="addTodo()">Add Task</button>
+  </div>
+  <ul id="taskList">
+    <li id="todo-1" class="todoItem">
+      <input type="checkbox">
+      <p>Take class Now</p>
+      <button onclick="deleteTodo(1)">X</button>
+    </li>
+    
+  </ul>
+ </div>
+</body>
+
+<script>
+  const heading = document.getElementById("h1");
+  const headingColor = document.getElementById("h1Btn");
+  
+
+  let intervalId = 0; // initial id to start the count
+  headingColor.addEventListener("click", ()=> {
+    if(intervalId){
+      clearInterval(intervalId)
+    }
+    intervalId = setInterval(()=> {
+      let colorChanger = getRandomColor();
+      heading.style.color = colorChanger;
+
+    },500)
+  })
+
+  //color generator function 
+  function getRandomColor(){
+    const red = Math.floor(Math.random() * 256);
+    const green = Math.floor(Math.random() * 256);
+    const blue  = Math.floor(Math.random() * 256);
+    let rgbColor = "rgb("+ red + ",  " + green +",  "+ blue +")"
+    return rgbColor;
+  }
+  
+  let currentIndex = 1;
+   
+  function addTodo(){
+    const inputElement = document.getElementById("inputTask");
+    const todoText = inputElement.value.trim();
+
+    if(todoText === ''){
+      alert("Please Enter some task text");
+      return
+    }
+    const taskList = document.getElementById("taskList");
+
+    //creating a todo in ul
+    const newTodo = document.createElement("li");
+    newTodo.setAttribute("id", 'todo-' + currentIndex);
+    newTodo.classList.add("todoItem")
+
+    //create new heading element
+    const newTodoText = document.createElement("p");
+    newTodoText.textContent = currentIndex + '. ' + todoText;
+
+    //create a checkbox element 
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox"
+    checkbox.id = "text-strike";
+    
+    
+    //create new button element 
+    const newBtn = document.createElement("button");
+    newBtn.textContent = "X";
+    newBtn.setAttribute("onclick", "deleteTodo(" + currentIndex + ")");
+
+    //append elements to the new todo div
+    newTodo.appendChild(checkbox)
+    newTodo.appendChild(newTodoText);
+    newTodo.appendChild(newBtn);
+
+    //append new todo to the parent alement 
+    taskList.appendChild(newTodo);
+
+    
+    checkbox.addEventListener("change", ()=>{
+      if(checkbox.checked){
+        newTodoText.style.textDecoration = "line-through";
+      }else {
+        newTodoText.style.textDecoration = "none";
+      }
+    })
+
+    //increment the index for the next todo item
+    currentIndex++;
+  }
+ 
+  function deleteTodo(ctr){
+      const element = document.getElementById("todo-" + ctr);
+      if(element){
+        element.parentNode.removeChild(element);
+      }
+    }
+
+</script>
+
+</html>

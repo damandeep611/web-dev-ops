@@ -1,0 +1,21 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+ul {
+  list-style: none;
+}
+.todoBox {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  align-items: center;
+  justify-content: center;
+  margin: 4rem 1rem;
+}
+#inputTask {
+  padding: 0.4rem 2rem;
+  border-radius: 5px;
+  border: 2px solid green;
+}
